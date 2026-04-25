@@ -1,0 +1,34 @@
+{
+  "$schema": "http://wsr-kwe.his-beta.huawei.com/8b1b9b5c241f4fbf9f9389182aeb47e5/sit/code-agent-admin/oc/config.json",
+  "skills": {
+    "extraPaths": [
+      {
+        "path": "C:\\Users\\z00693953\\.testagent\\skills",
+        "priority": 2,
+        "type": "user"
+      },
+      {
+        "path": "E:\\python3\\KindergartenFinder\\.testagent\\skills",
+        "priority": 5,
+        "type": "project"
+      }
+    ]
+  },
+  "experimental": {
+    "openTelemetry": true
+  },
+  "commands": {
+    "extraPaths": [
+      {
+        "path": "C:\\Users\\z00693953\\.testagent\\commands",
+        "priority": 2,
+        "type": "user"
+      },
+      {
+        "path": "E:\\python3\\KindergartenFinder\\.testagent\\commands",
+        "priority": 5,
+        "type": "project"
+      }
+    ]
+  }
+}
