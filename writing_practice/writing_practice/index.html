@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>小朋友学写字</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'KaiTi', 'STKaiti', serif;
+            background-color: #f5f5f5;
+            touch-action: none;
+        }
+        
+        .header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .controls {
+            background-color: white;
+            padding: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .controls label {
+            font-size: 14px;
+            color: #333;
+        }
+        
+        .controls select, .controls button {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            background-color: white;
+            cursor: pointer;
+        }
+        
+        .controls button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+        }
+        
+        .controls button:hover {
+            background-color: #45a049;
+        }
+        
+        .canvas-container {
+            position: relative;
+            width: 100%;
+            height: calc(100vh - 140px);
+            background-color: white;
+            overflow: hidden;
+        }
+        
+        #canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+        
+        
+        
+        .color-picker {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .color-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 2px solid #ddd;
+            cursor: pointer;
+        }
+        
+        .color-btn.active {
+            border-color: #4CAF50;
+            transform: scale(1.1);
+        }
+        
+        .size-control {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        input[type="range"] {
+            width: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">小朋友学写字</div>
+    
+    <div class="controls">
+        <label>选择字：</label>
+        <select id="charSelect">
+            <option value="一">一</option>
+            <option value="二">二</option>
+            <option value="三">三</option>
+            <option value="十">十</option>
+            <option value="人">人</option>
+            <option value="大">大</option>
+            <option value="天">天</option>
+            <option value="口">口</option>
+            <option value="日">日</option>
+            <option value="月">月</option>
+            <option value="水">水</option>
+            <option value="火">火</option>
+            <option value="山">山</option>
+            <option value="石">石</option>
+            <option value="土">土</option>
+            <option value="木">木</option>
+            <option value="禾">禾</option>
+            <option value="米">米</option>
+            <option value="草">草</option>
+            <option value="花">花</option>
+            <option value="上">上</option>
+            <option value="下">下</option>
+            <option value="左">左</option>
+            <option value="右">右</option>
+            <option value="前">前</option>
+            <option value="后">后</option>
+            <option value="东">东</option>
+            <option value="西">西</option>
+            <option value="南">南</option>
+            <option value="北">北</option>
+        </select>
+        
+        <button id="randomBtn">随机选字</button>
+        <button id="clearBtn">清空画布</button>
+        
+        <div class="color-picker">
+            <label>颜色：</label>
+            <div class="color-btn active" style="background-color: #000000;" data-color="#000000"></div>
+            <div class="color-btn" style="background-color: #FF0000;" data-color="#FF0000"></div>
+            <div class="color-btn" style="background-color: #00FF00;" data-color="#00FF00"></div>
+            <div class="color-btn" style="background-color: #0000FF;" data-color="#0000FF"></div>
+            <div class="color-btn" style="background-color: #FF6600;" data-color="#FF6600"></div>
+        </div>
+        
+        <div class="size-control">
+            <label>粗细：</label>
+            <input type="range" id="penSize" min="2" max="20" value="5">
+            <span id="sizeValue">5</span>
+        </div>
+    </div>
+    
+    <div class="canvas-container">
+        <canvas id="canvas"></canvas>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const charSelect = document.getElementById('charSelect');
+        const randomBtn = document.getElementById('randomBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const penSize = document.getElementById('penSize');
+        const sizeValue = document.getElementById('sizeValue');
+        const colorBtns = document.querySelectorAll('.color-btn');
+        
+        let currentChar = '一';
+        let isDrawing = false;
+        let lastX = 0;
+        let lastY = 0;
+        let penColor = '#000000';
+        let lineWidth = 5;
+        
+        function resizeCanvas() {
+            const container = canvas.parentElement;
+            canvas.width = container.clientWidth;
+            canvas.height = container.clientHeight;
+            draw();
+        }
+        
+        function draw() {
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // 清空画布
+            ctx.clearRect(0, 0, width, height);
+            
+            // 计算田字格尺寸
+            const margin = Math.min(width, height) * 0.1;
+            const boxSize = Math.min(width, height) * 0.8;
+            const centerX = margin + boxSize / 2;
+            const centerY = margin + boxSize / 2;
+            
+            // 田字格外框
+            ctx.strokeStyle = '#CCCCCC';
+            ctx.lineWidth = 3;
+            ctx.strokeRect(margin, margin, margin + boxSize, margin + boxSize);
+            
+            // 水平线
+            ctx.setLineDash([5, 5]);
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(margin, centerY);
+            ctx.lineTo(margin + boxSize, centerY);
+            ctx.stroke();
+            
+            // 垂直线
+            ctx.beginPath();
+            ctx.moveTo(centerX, margin);
+            ctx.lineTo(centerX, margin + boxSize);
+            ctx.stroke();
+            
+            // 对角线
+            ctx.strokeStyle = '#EEEEEE';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([3, 3]);
+            ctx.beginPath();
+            ctx.moveTo(margin, margin);
+            ctx.lineTo(margin + boxSize, margin + boxSize);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(margin + boxSize, margin);
+            ctx.lineTo(margin, margin + boxSize);
+            ctx.stroke();
+            
+            ctx.setLineDash([]);
+            
+            // 显示参考汉字
+            const fontSize = boxSize * 0.6;
+            ctx.font = `bold ${fontSize}px KaiTi, STKaiti`;
+            ctx.fillStyle = '#DDDDDD';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(currentChar, centerX, centerY);
+        }
+        
+        function startDraw(e) {
+            isDrawing = true;
+            const rect = canvas.getBoundingClientRect();
+            lastX = e.clientX - rect.left || e.touches[0].clientX - rect.left;
+            lastY = e.clientY - rect.top || e.touches[0].clientY - rect.top;
+            
+            ctx.beginPath();
+            ctx.moveTo(lastX, lastY);
+        }
+        
+        function drawLine(e) {
+            if (!isDrawing) return;
+            
+            const rect = canvas.getBoundingClientRect();
+            const currentX = e.clientX - rect.left || e.touches[0].clientX - rect.left;
+            const currentY = e.clientY - rect.top || e.touches[0].clientY - rect.top;
+            
+            ctx.strokeStyle = penColor;
+            ctx.lineWidth = lineWidth;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            ctx.lineTo(currentX, currentY);
+            ctx.stroke();
+            
+            ctx.beginPath();
+            ctx.moveTo(currentX, currentY);
+            
+            lastX = currentX;
+            lastY = currentY;
+        }
+        
+        function stopDraw() {
+            isDrawing = false;
+            ctx.beginPath();
+        }
+        
+        function clearCanvas() {
+            draw();
+        }
+        
+        function changeChar() {
+            currentChar = charSelect.value;
+            draw();
+        }
+        
+        function randomChar() {
+            const chars = charSelect.options;
+            const randomIndex = Math.floor(Math.random() * chars.length);
+            charSelect.selectedIndex = randomIndex;
+            changeChar();
+        }
+        
+        function changeColor(e) {
+            colorBtns.forEach(btn => btn.classList.remove('active'));
+            e.target.classList.add('active');
+            penColor = e.target.dataset.color;
+        }
+        
+        function changeSize() {
+            lineWidth = parseInt(penSize.value);
+            sizeValue.textContent = lineWidth;
+        }
+        
+        // 事件绑定
+        canvas.addEventListener('mousedown', startDraw);
+        canvas.addEventListener('mousemove', drawLine);
+        canvas.addEventListener('mouseup', stopDraw);
+        canvas.addEventListener('mouseleave', stopDraw);
+        
+        canvas.addEventListener('touchstart', startDraw, {passive: true});
+        canvas.addEventListener('touchmove', drawLine, {passive: true});
+        canvas.addEventListener('touchend', stopDraw);
+        
+        charSelect.addEventListener('change', changeChar);
+        randomBtn.addEventListener('click', randomChar);
+        clearBtn.addEventListener('click', clearCanvas);
+        
+        colorBtns.forEach(btn => btn.addEventListener('click', changeColor));
+        
+        penSize.addEventListener('input', changeSize);
+        
+        // 窗口大小变化时重新调整画布
+        window.addEventListener('resize', resizeCanvas);
+        
+        // 初始化
+        resizeCanvas();
+    </script>
+</body>
+</html>
