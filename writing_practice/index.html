@@ -914,58 +914,47 @@
         }
         
         function saveState() {
-            const beforeCanvas = document.createElement('canvas');
-            beforeCanvas.width = canvas.width;
-            beforeCanvas.height = canvas.height;
-            const beforeCtx = beforeCanvas.getContext('2d');
-            redrawBackgroundTo(beforeCtx);
-            
-            const afterCanvas = document.createElement('canvas');
-            afterCanvas.width = canvas.width;
-            afterCanvas.height = canvas.height;
-            const afterCtx = afterCanvas.getContext('2d');
-            afterCtx.drawImage(canvas, 0, 0);
-            
-            beforeCtx.globalCompositeOperation = 'destination-out';
-            beforeCtx.drawImage(afterCanvas, 0, 0);
-            
             history = history.slice(0, historyStep + 1);
-            history.push(beforeCanvas.toDataURL());
+            history.push(canvas.toDataURL());
             historyStep++;
             if (history.length > 20) {
                 history.shift();
                 historyStep--;
             }
         }
-        
+
         function undo() {
             if (historyStep > 0) {
                 historyStep--;
                 restoreStroke();
             } else if (historyStep === 0) {
                 historyStep = -1;
-                redrawBackground();
-            }
-        }
-        
-        function restoreStroke() {
-            redrawBackground();
-            for (let i = 0; i <= historyStep; i++) {
-                if (history[i]) {
-                    const strokeImg = new Image();
-                    strokeImg.onload = function() {
-                        ctx.drawImage(strokeImg, 0, 0);
-                    };
-                    strokeImg.src = history[i];
+                if (currentMode === 'drawing' && currentDrawing) {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.strokeStyle = 'rgba(231, 76, 60, 0.3)';
+                    ctx.lineWidth = 3;
+                    ctx.lineCap = 'round';
+                    ctx.lineJoin = 'round';
+                    drawings[currentDrawing]();
+                } else {
+                    drawGrid();
                 }
             }
         }
 
-        
-        function redrawBackground() {
-            redrawBackgroundTo(ctx);
+        function restoreStroke() {
+            if (historyStep >= 0 && history[historyStep]) {
+                const img = new Image();
+                img.onload = function() {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.drawImage(img, 0, 0);
+                };
+                img.src = history[historyStep];
+            } else {
+                redrawBackground();
+            }
         }
-        
+
         function redrawBackgroundTo(context) {
             if (currentMode === 'drawing' && currentDrawing) {
                 context.strokeStyle = 'rgba(231, 76, 60, 0.3)';
@@ -977,26 +966,26 @@
                 drawGridTo(context);
             }
         }
-        
+
         function drawGridTo(context) {
             context.clearRect(0, 0, canvas.width, canvas.height);
-            
+
             context.strokeStyle = '#ddd';
             context.lineWidth = 1;
-            
+
             const cellSize = canvas.width / 2;
-            
+
             context.beginPath();
             context.moveTo(0, cellSize);
             context.lineTo(canvas.width, cellSize);
             context.moveTo(cellSize, 0);
             context.lineTo(cellSize, canvas.height);
             context.stroke();
-            
+
             context.strokeStyle = '#aaa';
             context.lineWidth = 2;
             context.strokeRect(0, 0, canvas.width, canvas.height);
-            
+
             if (currentChar) {
                 if (currentMode === 'number') {
                     context.font = '280px Arial, sans-serif';
@@ -1009,8 +998,9 @@
                 context.fillText(currentChar, canvas.width / 2, canvas.height / 2 + 20);
             }
         }
-        
+
         function redrawBackground() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
             if (currentMode === 'drawing' && currentDrawing) {
                 ctx.strokeStyle = 'rgba(231, 76, 60, 0.3)';
                 ctx.lineWidth = 3;
