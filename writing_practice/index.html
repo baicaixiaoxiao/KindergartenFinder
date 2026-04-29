@@ -36,6 +36,79 @@
             padding: 15px;
         }
         
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding: 15px 25px;
+            background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(52, 152, 219, 0.3);
+        }
+        
+        .logo-brush {
+            position: relative;
+            width: 40px;
+            height: 40px;
+        }
+        
+        .logo-brush::before {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 35px;
+            background: linear-gradient(180deg, #8B4513 0%, #654321 100%);
+            border-radius: 3px 3px 2px 2px;
+            transform: rotate(-30deg);
+            top: 5px;
+            left: 12px;
+        }
+        
+        .logo-brush::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 15px solid #2c3e50;
+            transform: rotate(-30deg);
+            top: 0;
+            left: 18px;
+            border-radius: 2px;
+        }
+        
+        .logo-text {
+            font-size: 1.6rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #3498db, #e74c3c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .logo-ink {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: radial-gradient(circle, #1a1a1a 0%, #333 100%);
+            border-radius: 50%;
+            position: relative;
+        }
+        
+        .logo-ink::after {
+            content: '字';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
         h1 {
             color: #2c3e50;
             margin-bottom: 15px;
@@ -138,6 +211,99 @@
             box-shadow: 0 4px 15px rgba(155, 89, 182, 0.4);
         }
         
+        .btn-purple {
+            background: linear-gradient(135deg, #6c5ce7, #5b4cdb);
+            color: white;
+        }
+        
+        .btn-purple:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(108, 92, 231, 0.4);
+        }
+        
+        .btn-check {
+            background: linear-gradient(135deg, #00b894, #00a085);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        
+        .btn-check:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 184, 148, 0.4);
+        }
+        
+        .shape-container {
+            background: white;
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            margin-top: 15px;
+            text-align: center;
+        }
+        
+        #shapeCanvas {
+            border: 2px dashed #ddd;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .shape-input-area {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .shape-question {
+            font-size: 1.1rem;
+            color: #2c3e50;
+            font-weight: bold;
+        }
+        
+        .shape-type {
+            font-size: 1.1rem;
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        
+        .shape-answer {
+            width: 60px;
+            height: 40px;
+            font-size: 1.2rem;
+            text-align: center;
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            outline: none;
+        }
+        
+        .shape-answer:focus {
+            border-color: #2980b9;
+            box-shadow: 0 0 10px rgba(52, 152, 219, 0.3);
+        }
+        
+        .shape-feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        
+        .shape-feedback.correct {
+            background: rgba(39, 174, 96, 0.2);
+            color: #27ae60;
+        }
+        
+        .shape-feedback.wrong {
+            background: rgba(231, 76, 60, 0.2);
+            color: #c0392b;
+        }
+        
         .canvas-container {
             position: relative;
             background: white;
@@ -222,6 +388,46 @@
                 padding: 8px;
             }
             
+            .logo {
+                padding: 10px 15px;
+                gap: 8px;
+                margin-bottom: 12px;
+            }
+            
+            .logo-brush {
+                width: 30px;
+                height: 30px;
+            }
+            
+            .logo-brush::before {
+                width: 6px;
+                height: 25px;
+                transform: rotate(-30deg);
+                top: 3px;
+                left: 9px;
+            }
+            
+            .logo-brush::after {
+                border-left: 8px solid transparent;
+                border-right: 8px solid transparent;
+                border-top: 12px solid #2c3e50;
+                top: 0;
+                left: 14px;
+            }
+            
+            .logo-text {
+                font-size: 1.2rem;
+            }
+            
+            .logo-ink {
+                width: 24px;
+                height: 24px;
+            }
+            
+            .logo-ink::after {
+                font-size: 11px;
+            }
+            
             h1 {
                 font-size: 1.2rem;
                 margin-bottom: 8px;
@@ -293,12 +499,21 @@
     </style>
 </head>
 <body>
-    <h1>📝 小学生习字工具</h1>
+    <div class="logo">
+        <div class="logo-brush"></div>
+        <span class="logo-text">习字绘画工具</span>
+        <div class="logo-ink"></div>
+    </div>
     
     <div class="controls">
         <button class="btn-info" onclick="randomChar()">随机生字</button>
         <button class="btn-primary" onclick="randomDrawing()">简笔画</button>
-        <input type="text" id="charInput" maxlength="1" placeholder="字">
+        <button class="btn-success" onclick="randomNumber()">随机数字</button>
+        <button class="btn-purple" onclick="countShapes()">数图形</button>
+    </div>
+    
+    <div class="controls">
+        <input type="text" id="charInput" maxlength="2" placeholder="字/数字">
         <button class="btn-warning" onclick="clearCanvas()">清除重写</button>
         <button class="btn-danger" onclick="undo()">撤销</button>
     </div>
@@ -317,6 +532,17 @@
     
     <div class="canvas-container">
         <canvas id="writingCanvas" width="400" height="400"></canvas>
+    </div>
+    
+    <div id="shapeContainer" class="shape-container" style="display: none;">
+        <canvas id="shapeCanvas" width="350" height="350"></canvas>
+        <div class="shape-input-area">
+            <span class="shape-question">数一数有几个</span>
+            <span id="shapeTypeText" class="shape-type"></span>
+            <input type="number" id="shapeAnswer" class="shape-answer" placeholder="?">
+            <button class="btn-check" onclick="checkAnswer()">确认</button>
+        </div>
+        <div id="shapeFeedback" class="shape-feedback"></div>
     </div>
     
     <div class="instructions">
@@ -529,7 +755,11 @@
             ctx.strokeRect(0, 0, canvas.width, canvas.height);
             
             if (currentChar) {
-                ctx.font = '300px KaiTi, 楷体, STKaiti';
+                if (currentMode === 'number') {
+                    ctx.font = '280px Arial, sans-serif';
+                } else {
+                    ctx.font = '300px KaiTi, 楷体, STKaiti';
+                }
                 ctx.fillStyle = 'rgba(231, 76, 60, 0.2)';
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
@@ -540,15 +770,22 @@
         function showChar() {
             const char = charInput.value.trim();
             if (char.length === 0) {
-                alert('请输入一个汉字！');
+                alert('请输入汉字或数字！');
                 return;
             }
             currentChar = char[0];
+            if (/^\d$/.test(char)) {
+                currentMode = 'number';
+            } else {
+                currentMode = 'char';
+            }
             saveState();
             drawGrid();
         }
         
         function randomChar() {
+            document.querySelector('.canvas-container').style.display = 'block';
+            document.getElementById('shapeContainer').style.display = 'none';
             const idx = Math.floor(Math.random() * commonChars.length);
             currentChar = commonChars[idx];
             charInput.value = currentChar;
@@ -556,7 +793,102 @@
             drawGrid();
         }
         
+        function randomNumber() {
+            document.querySelector('.canvas-container').style.display = 'block';
+            document.getElementById('shapeContainer').style.display = 'none';
+            const num = Math.floor(Math.random() * 101);
+            currentChar = num.toString();
+            charInput.value = currentChar;
+            currentMode = 'number';
+            drawGrid();
+        }
+        
+        let targetCount = 0;
+        let currentShapeType = '';
+        const shapeTypes = ['圆形', '正方形', '三角形'];
+        
+        function countShapes() {
+            document.querySelector('.canvas-container').style.display = 'none';
+            document.getElementById('shapeContainer').style.display = 'block';
+            
+            const shapeCanvas = document.getElementById('shapeCanvas');
+            const sctx = shapeCanvas.getContext('2d');
+            sctx.clearRect(0, 0, shapeCanvas.width, shapeCanvas.height);
+            
+            shapeCanvas.style.background = '#f8f9fa';
+            
+            targetCount = Math.floor(Math.random() * 6) + 1;
+            currentShapeType = shapeTypes[Math.floor(Math.random() * shapeTypes.length)];
+            
+            document.getElementById('shapeTypeText').textContent = currentShapeType + '?';
+            document.getElementById('shapeAnswer').value = '';
+            document.getElementById('shapeFeedback').className = 'shape-feedback';
+            document.getElementById('shapeFeedback').textContent = '';
+            
+            const colors = ['#e74c3c', '#3498db', '#2ecc71', '#f39c12', '#9b59b6', '#1abc9c'];
+            
+            for (let i = 0; i < targetCount; i++) {
+                const x = Math.random() * 250 + 30;
+                const y = Math.random() * 200 + 50;
+                const size = Math.random() * 30 + 25;
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                
+                sctx.fillStyle = color;
+                sctx.strokeStyle = '#333';
+                sctx.lineWidth = 2;
+                
+                if (currentShapeType === '圆形') {
+                    sctx.beginPath();
+                    sctx.arc(x, y, size, 0, Math.PI * 2);
+                    sctx.fill();
+                    sctx.stroke();
+                } else if (currentShapeType === '正方形') {
+                    sctx.fillRect(x - size/2, y - size/2, size, size);
+                    sctx.strokeRect(x - size/2, y - size/2, size, size);
+                } else if (currentShapeType === '三角形') {
+                    sctx.beginPath();
+                    sctx.moveTo(x, y - size);
+                    sctx.lineTo(x + size, y + size * 0.7);
+                    sctx.lineTo(x - size, y + size * 0.7);
+                    sctx.closePath();
+                    sctx.fill();
+                    sctx.stroke();
+                }
+            }
+            
+            document.getElementById('shapeAnswer').focus();
+        }
+        
+        function checkAnswer() {
+            const userAnswer = parseInt(document.getElementById('shapeAnswer').value);
+            const feedback = document.getElementById('shapeFeedback');
+            
+            if (isNaN(userAnswer)) {
+                feedback.textContent = '请输入一个数字！';
+                feedback.className = 'shape-feedback wrong';
+                return;
+            }
+            
+            if (userAnswer === targetCount) {
+                const praises = ['太棒了！🎉', '正确！ 你真聪明！⭐', '答对了！棒棒的！👍', '完全正确！你是数数高手！🏆'];
+                feedback.textContent = praises[Math.floor(Math.random() * praises.length)];
+                feedback.className = 'shape-feedback correct';
+            } else {
+                const encouragements = ['没关系，再试一次！💪', '差一点点了，继续加油！🌟', '再想想，你一定能行！😊'];
+                feedback.textContent = encouragements[Math.floor(Math.random() * encouragements.length)];
+                feedback.className = 'shape-feedback wrong';
+            }
+        }
+        
+        document.getElementById('shapeAnswer').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkAnswer();
+            }
+        });
+        
         function randomDrawing() {
+            document.querySelector('.canvas-container').style.display = 'block';
+            document.getElementById('shapeContainer').style.display = 'none';
             const keys = Object.keys(drawings);
             const key = keys[Math.floor(Math.random() * keys.length)];
             currentMode = 'drawing';
@@ -576,23 +908,29 @@
         }
         
         function clearCanvas() {
-            if (currentMode === 'drawing' && currentDrawing) {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                ctx.strokeStyle = 'rgba(231, 76, 60, 0.3)';
-                ctx.lineWidth = 3;
-                ctx.lineCap = 'round';
-                ctx.lineJoin = 'round';
-                drawings[currentDrawing]();
-            } else {
-                drawGrid();
-            }
+            redrawBackground();
             history = [];
             historyStep = -1;
         }
         
         function saveState() {
+            const beforeCanvas = document.createElement('canvas');
+            beforeCanvas.width = canvas.width;
+            beforeCanvas.height = canvas.height;
+            const beforeCtx = beforeCanvas.getContext('2d');
+            redrawBackgroundTo(beforeCtx);
+            
+            const afterCanvas = document.createElement('canvas');
+            afterCanvas.width = canvas.width;
+            afterCanvas.height = canvas.height;
+            const afterCtx = afterCanvas.getContext('2d');
+            afterCtx.drawImage(canvas, 0, 0);
+            
+            beforeCtx.globalCompositeOperation = 'destination-out';
+            beforeCtx.drawImage(afterCanvas, 0, 0);
+            
             history = history.slice(0, historyStep + 1);
-            history.push(canvas.toDataURL());
+            history.push(beforeCanvas.toDataURL());
             historyStep++;
             if (history.length > 20) {
                 history.shift();
@@ -606,18 +944,79 @@
                 restoreStroke();
             } else if (historyStep === 0) {
                 historyStep = -1;
-                drawGrid();
+                redrawBackground();
             }
         }
         
         function restoreStroke() {
-            if (historyStep >= 0 && history[historyStep]) {
-                const img = new Image();
-                img.onload = function() {
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    ctx.drawImage(img, 0, 0);
-                };
-                img.src = history[historyStep];
+            redrawBackground();
+            for (let i = 0; i <= historyStep; i++) {
+                if (history[i]) {
+                    const strokeImg = new Image();
+                    strokeImg.onload = function() {
+                        ctx.drawImage(strokeImg, 0, 0);
+                    };
+                    strokeImg.src = history[i];
+                }
+            }
+        }
+
+        
+        function redrawBackground() {
+            redrawBackgroundTo(ctx);
+        }
+        
+        function redrawBackgroundTo(context) {
+            if (currentMode === 'drawing' && currentDrawing) {
+                context.strokeStyle = 'rgba(231, 76, 60, 0.3)';
+                context.lineWidth = 3;
+                context.lineCap = 'round';
+                context.lineJoin = 'round';
+                drawings[currentDrawing]();
+            } else {
+                drawGridTo(context);
+            }
+        }
+        
+        function drawGridTo(context) {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            
+            context.strokeStyle = '#ddd';
+            context.lineWidth = 1;
+            
+            const cellSize = canvas.width / 2;
+            
+            context.beginPath();
+            context.moveTo(0, cellSize);
+            context.lineTo(canvas.width, cellSize);
+            context.moveTo(cellSize, 0);
+            context.lineTo(cellSize, canvas.height);
+            context.stroke();
+            
+            context.strokeStyle = '#aaa';
+            context.lineWidth = 2;
+            context.strokeRect(0, 0, canvas.width, canvas.height);
+            
+            if (currentChar) {
+                if (currentMode === 'number') {
+                    context.font = '280px Arial, sans-serif';
+                } else {
+                    context.font = '300px KaiTi, 楷体, STKaiti';
+                }
+                context.fillStyle = 'rgba(231, 76, 60, 0.2)';
+                context.textAlign = 'center';
+                context.textBaseline = 'middle';
+                context.fillText(currentChar, canvas.width / 2, canvas.height / 2 + 20);
+            }
+        }
+        
+        function redrawBackground() {
+            if (currentMode === 'drawing' && currentDrawing) {
+                ctx.strokeStyle = 'rgba(231, 76, 60, 0.3)';
+                ctx.lineWidth = 3;
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+                drawings[currentDrawing]();
             } else {
                 drawGrid();
             }
